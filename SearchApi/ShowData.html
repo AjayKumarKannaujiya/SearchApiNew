@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="AngularJs/angular.js"></script>
+    <script src="AngularJs/DemoFile.js"></script>
+
+</head>
+
+<body ng-controller="mycontroller">
+    <h1>Search</h1>
+    <div class="container">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label>Search by Name/Manufacturer: <input type="text" ng-model="text" ng-keydown="$event.keyCode === 13 && search()">
+            </div>
+            <div class="col-md-6">
+                <label>Search by price: <input type="number" ng-model="price" ng-keydown="$event.keyCode === 13 && search()"></label>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Manufacturer</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Quantity in Stock</th>
+                    <th>Min Order Quantity</th>
+                    <th>Slab Range</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+
+            <tr ng-repeat="s in StoreData">
+                <td>
+                    {{s.name}}
+                </td>
+                <td>
+                    {{s.manufacturer}}
+                </td>
+                <td>
+                    {{s.description}}
+                </td>
+                <td>
+                    {{s.category}}
+                </td>
+                <td>
+                    {{s.quantity_in_stock}}
+                </td>
+                <td>
+                    {{s.min_quantity_to_order}}
+                </td>
+                <td>
+                    {{s.Slab_range}}
+                </td>
+                <td>
+                    {{s.Slab_range_price_per_unit}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

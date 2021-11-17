@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="erfDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'erfDB.dbo.tblPricing' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tblPricing">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="product_id" Type="int" />
+    <Property Name="Slab_range" Type="nvarchar" MaxLength="1000" />
+    <Property Name="Slab_range_price_per_unit" Type="float" />
+  </EntityType>
+  <EntityType Name="tblProducts">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="1000" />
+    <Property Name="manufacturer" Type="nvarchar" MaxLength="1000" />
+    <Property Name="description" Type="nvarchar" MaxLength="2000" />
+    <Property Name="category" Type="nvarchar" MaxLength="1000" />
+    <Property Name="quantity_in_stock" Type="int" />
+    <Property Name="min_quantity_to_order" Type="int" />
+  </EntityType>
+  <Association Name="FK__tblPricin__produ__38996AB5">
+    <End Role="tblProducts" Type="Self.tblProducts" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tblPricing" Type="Self.tblPricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblProducts">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="tblPricing">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="erfDBModelStoreContainer">
+    <EntitySet Name="tblProducts" EntityType="Self.tblProducts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPricing" EntityType="Self.tblPricing" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tblPricing].[id] AS [id], 
+    [tblPricing].[product_id] AS [product_id], 
+    [tblPricing].[Slab_range] AS [Slab_range], 
+    [tblPricing].[Slab_range_price_per_unit] AS [Slab_range_price_per_unit]
+    FROM [dbo].[tblPricing] AS [tblPricing]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__tblPricin__produ__38996AB5" Association="Self.FK__tblPricin__produ__38996AB5">
+      <End Role="tblProducts" EntitySet="tblProducts" />
+      <End Role="tblPricing" EntitySet="tblPricing" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="erfDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblProduct">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="manufacturer" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="category" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="quantity_in_stock" Type="Int32" />
+    <Property Name="min_quantity_to_order" Type="Int32" />
+    <NavigationProperty Name="tblPricings" Relationship="Self.FK__tblPricin__produ__38996AB5" FromRole="tblProducts" ToRole="tblPricing" />
+  </EntityType>
+  <EntityType Name="tblPricing">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="product_id" Type="Int32" />
+    <Property Name="Slab_range" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Slab_range_price_per_unit" Type="Double" />
+    <NavigationProperty Name="tblProduct" Relationship="Self.FK__tblPricin__produ__38996AB5" FromRole="tblPricing" ToRole="tblProducts" />
+  </EntityType>
+  <Association Name="FK__tblPricin__produ__38996AB5">
+    <End Role="tblProducts" Type="Self.tblProduct" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tblPricing" Type="Self.tblPricing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblProducts">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="tblPricing">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="erfDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblProducts" EntityType="Self.tblProduct" />
+    <EntitySet Name="tblPricings" EntityType="Self.tblPricing" />
+    <AssociationSet Name="FK__tblPricin__produ__38996AB5" Association="Self.FK__tblPricin__produ__38996AB5">
+      <End Role="tblProducts" EntitySet="tblProducts" />
+      <End Role="tblPricing" EntitySet="tblPricings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

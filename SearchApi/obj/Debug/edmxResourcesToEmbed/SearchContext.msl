@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="erfDBModelStoreContainer" CdmEntityContainer="erfDBEntities">
+    <EntitySetMapping Name="tblProducts">
+      <EntityTypeMapping TypeName="erfDBModel.tblProduct">
+        <MappingFragment StoreEntitySet="tblProducts">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="manufacturer" ColumnName="manufacturer" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="quantity_in_stock" ColumnName="quantity_in_stock" />
+          <ScalarProperty Name="min_quantity_to_order" ColumnName="min_quantity_to_order" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblPricings">
+      <EntityTypeMapping TypeName="erfDBModel.tblPricing">
+        <MappingFragment StoreEntitySet="tblPricing">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="Slab_range" ColumnName="Slab_range" />
+          <ScalarProperty Name="Slab_range_price_per_unit" ColumnName="Slab_range_price_per_unit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

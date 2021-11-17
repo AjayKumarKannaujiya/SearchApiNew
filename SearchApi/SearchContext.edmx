@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="erfDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'erfDB.dbo.tblPricing' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblPricing">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_id" Type="int" />
+          <Property Name="Slab_range" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Slab_range_price_per_unit" Type="float" />
+        </EntityType>
+        <EntityType Name="tblProducts">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="1000" />
+          <Property Name="manufacturer" Type="nvarchar" MaxLength="1000" />
+          <Property Name="description" Type="nvarchar" MaxLength="2000" />
+          <Property Name="category" Type="nvarchar" MaxLength="1000" />
+          <Property Name="quantity_in_stock" Type="int" />
+          <Property Name="min_quantity_to_order" Type="int" />
+        </EntityType>
+        <Association Name="FK__tblPricin__produ__38996AB5">
+          <End Role="tblProducts" Type="Self.tblProducts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblPricing" Type="Self.tblPricing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProducts">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="tblPricing">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="erfDBModelStoreContainer">
+          <EntitySet Name="tblProducts" EntityType="Self.tblProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPricing" EntityType="Self.tblPricing" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblPricing].[id] AS [id], 
+    [tblPricing].[product_id] AS [product_id], 
+    [tblPricing].[Slab_range] AS [Slab_range], 
+    [tblPricing].[Slab_range_price_per_unit] AS [Slab_range_price_per_unit]
+    FROM [dbo].[tblPricing] AS [tblPricing]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__tblPricin__produ__38996AB5" Association="Self.FK__tblPricin__produ__38996AB5">
+            <End Role="tblProducts" EntitySet="tblProducts" />
+            <End Role="tblPricing" EntitySet="tblPricing" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="erfDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblProduct">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="manufacturer" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="category" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="quantity_in_stock" Type="Int32" />
+          <Property Name="min_quantity_to_order" Type="Int32" />
+          <NavigationProperty Name="tblPricings" Relationship="Self.FK__tblPricin__produ__38996AB5" FromRole="tblProducts" ToRole="tblPricing" />
+        </EntityType>
+        <EntityType Name="tblPricing">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="Slab_range" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Slab_range_price_per_unit" Type="Double" />
+          <NavigationProperty Name="tblProduct" Relationship="Self.FK__tblPricin__produ__38996AB5" FromRole="tblPricing" ToRole="tblProducts" />
+        </EntityType>
+        <Association Name="FK__tblPricin__produ__38996AB5">
+          <End Role="tblProducts" Type="Self.tblProduct" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblPricing" Type="Self.tblPricing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProducts">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="tblPricing">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="erfDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblProducts" EntityType="Self.tblProduct" />
+          <EntitySet Name="tblPricings" EntityType="Self.tblPricing" />
+          <AssociationSet Name="FK__tblPricin__produ__38996AB5" Association="Self.FK__tblPricin__produ__38996AB5">
+            <End Role="tblProducts" EntitySet="tblProducts" />
+            <End Role="tblPricing" EntitySet="tblPricings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="erfDBModelStoreContainer" CdmEntityContainer="erfDBEntities">
+          <EntitySetMapping Name="tblProducts">
+            <EntityTypeMapping TypeName="erfDBModel.tblProduct">
+              <MappingFragment StoreEntitySet="tblProducts">
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="manufacturer" ColumnName="manufacturer" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="quantity_in_stock" ColumnName="quantity_in_stock" />
+                <ScalarProperty Name="min_quantity_to_order" ColumnName="min_quantity_to_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPricings">
+            <EntityTypeMapping TypeName="erfDBModel.tblPricing">
+              <MappingFragment StoreEntitySet="tblPricing">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="Slab_range" ColumnName="Slab_range" />
+                <ScalarProperty Name="Slab_range_price_per_unit" ColumnName="Slab_range_price_per_unit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
